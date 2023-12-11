@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
+import 'package:epigo_adminpanel/constants.dart';
 import 'package:epigo_adminpanel/services/firebase.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:intl/intl.dart';
+
 
 
 
@@ -60,42 +63,52 @@ void initState() {
   }
   Widget build(BuildContext context) {
      FirebaseServices _services = FirebaseServices();
-    Widget analyticWidget(String title, String value){
-      return  Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Container(
-              height: 100,
-              width: 200,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueGrey),
-                borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(255, 216, 189, 154),
-              ),
-              child:  Padding(
-                padding:  EdgeInsets.all(18.0),
-                child:  Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,style: TextStyle(
-                      fontSize: 20,
+  Widget analyticWidget(String title, String value, IconData iconData , Color containerColor) {
+  return Padding(
+    padding: const EdgeInsets.all(18.0),
+    child: Container(
+      height: 120,
+      width: 300,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueGrey),
+        borderRadius: BorderRadius.circular(10),
+              color: containerColor,
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(18.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20.0,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize:   18,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                    ),),
-                    
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(value),
-                        Icon(Icons.show_chart),
-                      ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+                Text(value),
+              ],
             ),
-          );
-    }
+            Icon(
+              iconData,
+              size: 50, // Adjust the size of the icon as needed
+              color: Colors.black,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
     SideBarwidget _sideBar = SideBarwidget();
    
    return AdminScaffold(
@@ -118,20 +131,12 @@ void initState() {
                 children: [
 
                   
-Center(
-  child: const Padding(
+      Center(
+  child:  Padding(
     padding: EdgeInsets.all(12.0),
-    child: Text(
-        'Welcome to Epi Go Dashboard',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-            letterSpacing: 3,
-            fontWeight: FontWeight.bold,
-          ),
+    child: Text( 'Welcome to Epi Go Dashboard', style: commonTextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
     ),
   ),
-),
 Text(timeText, style: const TextStyle(
             fontSize: 20,
             color: Colors.black,)),
@@ -171,13 +176,44 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Utilisateur",snapshot.data!.size.toString());
+
+            return  analyticWidget("Total Utilisateur", snapshot.data!.size.toString(), Icons.person,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 
       },
     ),
+    
                StreamBuilder<QuerySnapshot>(
+      stream: _services.fournisseurs.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  height: 100,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueGrey),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue,
+                  ),
+                  child: Center(child: CircularProgressIndicator(color: Colors.white),),
+                ),
+              );
+            }
+            if(snapshot.hasData){
+            return  analyticWidget("Total Fournisseurs",snapshot.data!.size.toString(),CupertinoIcons.group_solid,Color.fromARGB(255, 108, 161, 108));
+            }
+            return SizedBox();
+
+      },
+    ),
+     StreamBuilder<QuerySnapshot>(
       stream: _services.categories.snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -200,7 +236,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Categories",snapshot.data!.size.toString());
+            return  analyticWidget("Total Categories",snapshot.data!.size.toString(),Icons.category,Color.fromARGB(255, 85, 223, 223));
             }
             return SizedBox();
 
@@ -229,15 +265,72 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Products",snapshot.data!.size.toString());
+            return  analyticWidget("Total Produits",snapshot.data!.size.toString(),Icons.production_quantity_limits,Colors.greenAccent.shade200);
             }
             return SizedBox();
 
       },
     ),
              
-               
+             StreamBuilder<QuerySnapshot>(
+      stream: _services.orders.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
 
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  height: 100,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color:Color.fromARGB(255, 216, 189, 154)),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 216, 189, 154),
+                  ),
+                  child: Center(child: CircularProgressIndicator(color: Colors.white),),
+                ),
+              );
+            }
+            if(snapshot.hasData){
+            return  analyticWidget("Total Commandes",snapshot.data!.size.toString(),Icons.shopping_cart,Colors.purpleAccent.shade100);
+            }
+            return SizedBox();
+
+      },
+    ),
+      StreamBuilder<QuerySnapshot>(
+      stream: _services.deliveryMethods.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  height: 100,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    border: Border.all(color:Color.fromARGB(255, 216, 189, 154)),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 216, 189, 154),
+                  ),
+                  child: Center(child: CircularProgressIndicator(color: Colors.white),),
+                ),
+              );
+            }
+            if(snapshot.hasData){
+            return  analyticWidget("Methodes de livraisons",snapshot.data!.size.toString(), Icons.delivery_dining_outlined,Color.fromARGB(255, 223, 214, 89));
+            }
+            return SizedBox();
+
+      },
+    ),
+      
                 ],
               ),
           ],
@@ -246,6 +339,7 @@ Text(timeText, style: const TextStyle(
          
         ],
       ),
+      
     );
   }
 }

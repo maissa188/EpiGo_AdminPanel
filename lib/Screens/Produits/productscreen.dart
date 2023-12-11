@@ -23,10 +23,13 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     FirebaseServices _services = FirebaseServices();
     SideBarwidget _sideBar = SideBarwidget();
-  TextEditingController searchController = TextEditingController();
+
+
   String selectedCategory = 'Tous les produits';
-  String selectedFournisseur = 'Tous les fournisseurs';
+
+
   ProductService productService = ProductService();
+List<Map<String, dynamic>> lowQuantityProducts = [];
 
 
 
@@ -73,23 +76,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   SizedBox(height: 10),
-   
-            // Ajoutez la liste déroulante pour filtrer par catégorie
-            
-                // Zone de recherche
-               /*TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    labelText: 'Rechercher par lettre',
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                  onChanged: (value) {
-                    // Mettez à jour la liste des produits en fonction de la lettre saisie
-                    // Vous pouvez utiliser un filtre comme snapshot.data!.docs.where((doc) => doc['title'].startsWith(value.toUpperCase()))
-                    // pour filtrer les produits.
-                  },
-                ),*/
-
+  
                   SizedBox(height: 30,), 
           Align(
             alignment: Alignment.centerRight,
@@ -106,6 +93,7 @@ class _ProductScreenState extends State<ProductScreen> {
              style: ElevatedButton.styleFrom(primary:primaryColor),
             
             ),
+            
           ), 
                            
          const Divider(thickness: 3,),
@@ -205,13 +193,13 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
       );
     } else {
-      return Container(); // Retourne un conteneur vide si la catégorie ne correspond pas
+      return Container(); 
     }
   },
 ),
 
      )
-                      //CategorieWidget(),
+                      
         ],
               )
             )

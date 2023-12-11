@@ -4,7 +4,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:epigo_adminpanel/Screens/Fournisseurs/FournisseurViewModel.dart';
+import 'package:epigo_adminpanel/services/FournisseurViewModel.dart';
 import 'package:epigo_adminpanel/services/firebase.dart';
 import 'package:flutter/material.dart';
 

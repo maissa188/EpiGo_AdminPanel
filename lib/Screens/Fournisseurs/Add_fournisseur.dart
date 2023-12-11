@@ -1,5 +1,5 @@
-import 'package:epigo_adminpanel/Screens/Fournisseurs/FournisseurViewModel.dart';
-import 'package:epigo_adminpanel/services/fournisseur_Screen.dart';
+import 'package:epigo_adminpanel/services/FournisseurViewModel.dart';
+import 'package:epigo_adminpanel/Screens/Fournisseurs/fournisseur_Screen.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
 import 'package:epigo_adminpanel/constants.dart';
 import 'package:flutter/material.dart';

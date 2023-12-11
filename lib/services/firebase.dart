@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:epigo_adminpanel/Modeles/delivery_methods.dart';
 import 'package:epigo_adminpanel/Modeles/product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,9 +9,12 @@ class FirebaseServices{
   CollectionReference categories = FirebaseFirestore.instance.collection('categories');
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   CollectionReference banners = FirebaseFirestore.instance.collection('banners');
-  CollectionReference produits = FirebaseFirestore.instance.collection('products');
+  Query<Map<String, dynamic>> produits = FirebaseFirestore.instance.collection('products').orderBy('title',descending: false);
     CollectionReference fournisseurs = FirebaseFirestore.instance.collection('fournisseurs');
   CollectionReference orders = FirebaseFirestore.instance.collection('orders');
+     CollectionReference deliveryMethods = FirebaseFirestore.instance.collection('deliveryMethods');
+         CollectionReference stock= FirebaseFirestore.instance.collection('stock');
+
   Future<QuerySnapshot> getAdminCredentials(){
 var result = FirebaseFirestore.instance.collection('Admin').get();
 return result;

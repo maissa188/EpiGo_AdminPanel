@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color(0xFFFF7043);
 Color beigeColor = Color.fromARGB(255, 216, 189, 154);
@@ -15,6 +15,17 @@ Color active = Color.fromARGB(255, 69, 89, 198);
 Color primaryColor= const Color(0xffd1ad17);
 
 
+TextStyle commonTextStyle({
+  double fontSize = 16,
+  Color color = Colors.black,
+  FontWeight fontWeight = FontWeight.normal,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: color,
+    fontWeight: fontWeight,
+  );
+}
 
 const kontColor = Color(0xFF5C6BC0);
 const kPrimaryLightColor = Color(0xFFF5F5F5);

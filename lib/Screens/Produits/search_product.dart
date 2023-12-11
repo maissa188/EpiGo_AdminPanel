@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:epigo_adminpanel/Controllers/search_controller.dart';
 
 class SearchProduct extends StatelessWidget {
   SearchProduct({super.key});

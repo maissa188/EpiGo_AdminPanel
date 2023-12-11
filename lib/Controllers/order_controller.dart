@@ -20,7 +20,6 @@ class OrderController extends GetxController {
   List<Order> get productList => orders;
 
   final newOrders = {}.obs;
-  //List<Order> get orderList => orders;
 @override
 void onReady() {
   orders.bindStream(FirestoreDB().getOrdersByStatus('en attente'));

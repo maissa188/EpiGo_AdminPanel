@@ -1,6 +1,6 @@
 
 
-import 'package:epigo_adminpanel/Screens/Users/ClientsTable.dart';
+import 'package:epigo_adminpanel/widgets/ClientsTable.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
