@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:epigo_adminpanel/Screens/Produits/EditProductViewModel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +101,7 @@ void _updateImage() async {
     });
   }
 }
-late final EditProductViewModel viewModel;
+
 // Function to calculate selling price based on purchase price
   void _calculateSellingPrice() {
     // Assuming you want to add a 30% margin

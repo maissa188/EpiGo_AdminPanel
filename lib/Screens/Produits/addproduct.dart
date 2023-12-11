@@ -46,7 +46,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     _priceController = TextEditingController();
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
-_fourController = TextEditingController();
+
 _prixachatController = TextEditingController();
 _qteStockController = TextEditingController();
     _unitController = TextEditingController();
@@ -349,6 +349,8 @@ Widget build(BuildContext context) {
                             ),
                           ],
                         ),
+                     
+                     
                       ],
                     ),
              
@@ -410,7 +412,7 @@ Widget build(BuildContext context) {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
-                            readOnly: true,
+                            //readOnly: true,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Prix de vente',

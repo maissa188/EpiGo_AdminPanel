@@ -1,15 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:epigo_adminpanel/Screens/Banners/banner.dart';
 import 'package:epigo_adminpanel/Screens/Categories/CategoryScreen.dart';
 import 'package:epigo_adminpanel/Screens/DeliveryMethods/delivery_screen.dart';
-import 'package:epigo_adminpanel/Screens/order/OrdersScreen.dart';
-import 'package:epigo_adminpanel/services/fournisseur_Screen.dart';
+import 'package:epigo_adminpanel/Screens/Fournisseurs/fournisseur_Screen.dart';
+import 'package:epigo_adminpanel/Screens/Produits/Stock.dart';
+import 'package:epigo_adminpanel/Screens/Produits/StockScreen%20.dart';
 import 'package:epigo_adminpanel/Screens/Produits/productscreen.dart';
 import 'package:epigo_adminpanel/Screens/Users/userscreen.dart';
-import 'package:flutter/material.dart';
+import 'package:epigo_adminpanel/Screens/order/OrdersScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import 'Screens/HomeScreen.dart';
 import 'Screens/LoginScreen.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
         UserScreen.id :(context)=>  UserScreen(), 
        Fournisseur_Screen.id:(context)=>Fournisseur_Screen(),
        OrdersScreen.id:(context)=> OrdersScreen(),
+         DeliveryMethods.id:(context)=>DeliveryMethods(),
+        Stock_Screen .id:(context)=>StockScreen(),
 
       },
      

@@ -1,15 +1,15 @@
 import 'package:epigo_adminpanel/Screens/Banners/banner.dart';
 import 'package:epigo_adminpanel/Screens/Categories/CategoryScreen.dart';
 import 'package:epigo_adminpanel/Screens/DeliveryMethods/delivery_screen.dart';
+import 'package:epigo_adminpanel/Screens/Fournisseurs/fournisseur_Screen.dart';
 import 'package:epigo_adminpanel/Screens/HomeScreen.dart';
+import 'package:epigo_adminpanel/Screens/Produits/Stock.dart';
 import 'package:epigo_adminpanel/Screens/Produits/productscreen.dart';
 import 'package:epigo_adminpanel/Screens/Users/userscreen.dart';
 import 'package:epigo_adminpanel/Screens/order/OrdersScreen.dart';
 import 'package:epigo_adminpanel/constants.dart';
-import 'package:epigo_adminpanel/services/fournisseur_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
   class SideBarwidget {
     sideBarMenus(context, selectedRoute){
     return SideBar(
@@ -65,9 +65,10 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
         ),
    AdminMenuItem(
           title: 'Stock',
-          route: '', // Replace with the actual route for Orders
+          route: Stock_Screen .id, // Replace with the actual route for Orders
           icon: Icons.check_box, 
         ),
+        
         ], 
         
         selectedRoute: selectedRoute,

@@ -45,7 +45,7 @@ class OrdersScreen extends StatefulWidget {
                       indicatorSize: TabBarIndicatorSize.label,
                       labelColor: Styles.primaryColor,
                       tabs: const [
-                        Tab(text: 'En train de préparer'),
+                        Tab(text: 'En préparation'),
                         Tab(text: 'En Expédition'),
                         Tab(text: 'Livrée'),
                       ],
