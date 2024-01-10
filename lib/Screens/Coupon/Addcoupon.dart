@@ -1,33 +1,37 @@
-// ignore_for_file: camel_case_types, file_names, sort_child_properties_last, prefer_const_constructors
-
-import 'package:epigo_adminpanel/Screens/Produits/StockScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:epigo_adminpanel/Screens/Coupon/coupons.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
-import 'package:epigo_adminpanel/constants.dart';
-import 'package:epigo_adminpanel/services/stock_view.dart';
-import 'package:epigo_adminpanel/widgets/fournisseur_datatable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:intl/intl.dart';
+import 'package:epigo_adminpanel/Screens/Coupon/coupons.dart';
+import '../../Modeles/coupon.dart';
+import '../../constants.dart';
+
 class Addcoupon_Screen extends StatefulWidget {
-    static const String id = 'coupon-screen';
+   
   const Addcoupon_Screen({super.key});
 
   @override
   State<Addcoupon_Screen> createState() => _Addcoupon_ScreenState();
 }
 
-class _Addcoupon_ScreenState extends State<_Addcoupon_Screen> {
+class _Addcoupon_ScreenState extends State<Addcoupon_Screen> {
 DateTime selectedDate = DateTime.now();
    
 var dateText = TextEditingController();
+var datedebit = TextEditingController();
 var title = TextEditingController();
 var disController= TextEditingController();
 var description= TextEditingController();
-bool isAvtivated = false;
+bool isActivated = false;
+
  
  DateTime _selectedDate = DateTime.now();
 
   void initState(){
    dateText = TextEditingController();
+   datedebit = TextEditingController();
    title = TextEditingController();
    disController = TextEditingController();
    description= TextEditingController();
@@ -36,32 +40,40 @@ bool isAvtivated = false;
 
 
 void _Addcoupon() async {
-  if(title.text.isNotEmpty && disController.text.isNotEmpty) {
+  if(title.text.isNotEmpty && disController.text.isNotEmpty && description.text.isNotEmpty && dateText.text.isNotEmpty ) {
     try {
       String couponId = FirebaseFirestore.instance.collection('coupons').doc().id;
 
       // Créez une instance du modèle Coupon avec les données du formulaire
-      Coupon couponData = Coupon(
+      CouponModel couponData = CouponModel(
         id: couponId,
         title: title.text,
-        discount: double.parse(disController.text),
+        discount: int.parse(disController.text),
         expiryDate: dateText.text,
+        debitDate:datedebit.text,
         description: description.text,
-        isAvtivated: isAvtivated,
+       isActivated: isActivated,
       );
 
       // Convertissez l'instance du modèle en une Map
-      Map<String, dynamic> couponMap = couponData.toMap();
+    Map<String, dynamic> couponMap = couponData.toMap();
 
       // Enregistrez les données dans Firestore
       await FirebaseFirestore.instance.collection('coupons').doc(couponId).set(couponMap);
 
        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Données stockées avec succès.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+        SnackBar(
+          content: Text('Données stockées avec succès.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Rediriger vers la page Coupons_Screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Coupon_Screen()),
+      );
    
     } catch (error) {
       // Display an error message
@@ -79,6 +91,7 @@ void _Addcoupon() async {
       SnackBar(
         content: Text('Veuillez remplir tous les champs correctement.'),
         duration: Duration(seconds: 2),
+         backgroundColor: Colors.red,
       ),
     );
   }
@@ -99,6 +112,21 @@ _selectDate(context)async{
     });
      }
 }
+_selecttDate(context)async{
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+     firstDate: DateTime.now(), 
+     lastDate: DateTime(2050),
+     );
+     if (picked!= null && picked != _selectedDate){
+      setState(() {
+      _selectedDate = picked;
+      String formattedText = DateFormat('yyyy-MM-dd').format(_selectedDate);
+      datedebit.text =formattedText;
+    });
+     }
+}
 
 
   @override
@@ -107,36 +135,36 @@ _selectDate(context)async{
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 216, 189, 154),
+           backgroundColor: greenColor,
         title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
       ),
-      sideBar: _sideBar.sideBarMenus(context,StockScreen.id),
-      body: Center(
+      sideBar: _sideBar.sideBarMenus(context,Coupon_Screen.id),
+      body: Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 250.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+           mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: 20.0),
-               const Text(
-                        'Code promo',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
-                        ),
-                      ),
-                     SizedBox(height: 50.0),
+             Align(
+  alignment: Alignment.topLeft,
+  child: const Text(
+    'Coupon de réduction',
+    style: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 24,
+    ),
+  ),
+),
+   SizedBox(height: 50.0),
                      Row(
       children: [
-                    
-                         
-        SizedBox(width: 50.0,),
-                          Column(
+                   Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(padding: EdgeInsets.symmetric(horizontal: 130.0)),
                               Container(
-                                        width: 250.0,
+                                        width: 300.0,
                                         child: TextField(
                                           controller: title,
                                           keyboardType: TextInputType.text,
@@ -148,18 +176,15 @@ _selectDate(context)async{
       ],
       
     ),
-     SizedBox(height: 16.0),
+     SizedBox(height: 20.0),
 Row(
       children: [
-                    
-                         
-        SizedBox(width: 50.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(padding: EdgeInsets.symmetric(horizontal: 130.0)),
                               Container(
-                                        width: 250.0,
+                                        width: 300.0,
                                         child: TextField(
                                           controller: disController,
                                           keyboardType: TextInputType.number,
@@ -171,14 +196,15 @@ Row(
       ],
       
     ),
-
+     SizedBox(height: 20.0),
                       Row(
                         children: [
                           SizedBox(
                             width: 300.0,
                             child: TextFormField(
                               keyboardType: TextInputType.number,
-                              controller: dateText,
+                              controller: datedebit,
+                              readOnly: true,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Date est obligatoire';
@@ -187,8 +213,40 @@ Row(
                               },
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.zero,
-                                border: OutlineInputBorder(),
-                                labelText: 'Date d/expiration',
+                                labelText: 'Date débit',
+                                labelStyle: TextStyle(color: Colors.black),
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    _selecttDate(context);
+                                  },
+                                  child: Icon(Icons.date_range_outlined),
+                                ),
+                              ),
+                            ),
+                          ),
+                           
+                          
+                        ],
+                      ),
+              
+ SizedBox(height: 20.0),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 300.0,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: dateText,
+                              readOnly: true,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Date est obligatoire';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                labelText: 'Date d\'expiration',
                                 labelStyle: TextStyle(color: Colors.black),
                                 suffixIcon: InkWell(
                                   onTap: () {
@@ -203,17 +261,15 @@ Row(
                           
                         ],
                       ),
+                       SizedBox(height: 20.0),
 Row(
       children: [
-                    
-                         
-        SizedBox(width: 50.0,),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+            
                             children: [
                               Padding(padding: EdgeInsets.symmetric(horizontal: 130.0)),
                               Container(
-                                        width: 250.0,
+                                        width: 300.0,
                                         child: TextField(
                                           controller: description,
                                           keyboardType: TextInputType.text,
@@ -231,11 +287,7 @@ Row(
                            SizedBox(height: 16.0),
 Row(
       children: [
-                    
-                         
-        SizedBox(width: 50.0,),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(padding: EdgeInsets.symmetric(horizontal: 130.0)),
                               Container(
@@ -244,10 +296,10 @@ Row(
             children: [
               Text('Disponibilité: '),
               Switch(
-                value: isAvtivated, // Use the local variable here
+                value:isActivated, // Use the local variable here
                 onChanged: (value) {
                   setState(() {
-                    isAvtivated = value;
+                    isActivated = value;
                   });
                 },
               ),
@@ -259,16 +311,17 @@ Row(
       ],
       
     ),
-
-
+SizedBox(height: 20.0,),
+                           
+               ElevatedButton(
+                  onPressed: () {
+                   _Addcoupon();
+                      },
+                  child: Text('Sauvegarder',style: TextStyle(color: Colors.black),),
+                   style: ElevatedButton.styleFrom(primary: primaryColor),
+                ),
+                
             
-              SizedBox(height: 20.0,),
-              ElevatedButton(
-                onPressed: () {
-                 _Addcoupon();
-                },
-                child: Text('Sauvegarder'),
-              ),
             ],
           ),
           

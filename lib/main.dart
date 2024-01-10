@@ -3,10 +3,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:epigo_adminpanel/Screens/Banners/banner.dart';
 import 'package:epigo_adminpanel/Screens/Categories/CategoryScreen.dart';
+import 'package:epigo_adminpanel/Screens/Coupon/coupons.dart';
 import 'package:epigo_adminpanel/Screens/DeliveryMethods/delivery_screen.dart';
 import 'package:epigo_adminpanel/Screens/Fournisseurs/fournisseur_Screen.dart';
 import 'package:epigo_adminpanel/Screens/Produits/Stock.dart';
-import 'package:epigo_adminpanel/Screens/Produits/StockScreen%20.dart';
 import 'package:epigo_adminpanel/Screens/Produits/productscreen.dart';
 import 'package:epigo_adminpanel/Screens/Users/userscreen.dart';
 import 'package:epigo_adminpanel/Screens/order/OrdersScreen.dart';
@@ -56,7 +56,9 @@ class MyApp extends StatelessWidget {
        Fournisseur_Screen.id:(context)=>Fournisseur_Screen(),
        OrdersScreen.id:(context)=> OrdersScreen(),
          DeliveryMethods.id:(context)=>DeliveryMethods(),
-        Stock_Screen .id:(context)=>StockScreen(),
+       Stock_Screen .id:(context)=>Stock_Screen(),
+         Coupon_Screen.id:(context)=>Coupon_Screen(),
+        
 
       },
      

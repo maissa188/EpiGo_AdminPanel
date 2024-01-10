@@ -4,9 +4,9 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:epigo_adminpanel/services/FournisseurViewModel.dart';
-import 'package:epigo_adminpanel/services/firebase.dart';
 import 'package:flutter/material.dart';
+
+import '../services/stock_view.dart';
 
 class StockDataTable extends StatelessWidget {
   final StockView viewModel;
@@ -40,7 +40,7 @@ class StockDataTable extends StatelessWidget {
               DataColumn(label: Text('Produit')),
               DataColumn(label: Text('Fournisseur')),
                  DataColumn(label: Text('Quantité')),
-              //DataColumn(label: Text('Voir Détails')),
+              DataColumn(label: Text('Action')),
              
             ],
             // details
@@ -75,6 +75,24 @@ List<DataCell> _extractCells(DocumentSnapshot document,  BuildContext context) {
     DataCell(Text(document['produit'].toString())),
     DataCell(Text(document['fournisseur'].toString())),
      DataCell(Text(document['quantity'].toString())),
+    DataCell(Row(
+  children: [
+    IconButton(
+      icon: Icon(Icons.visibility),  
+      onPressed: () {
+        
+      },
+    ),
+    IconButton(
+      icon: Icon(Icons.edit),  
+      onPressed: () {
+       
+      },
+    ),
+   
+  ],
+)),
+
    
   ];
 }

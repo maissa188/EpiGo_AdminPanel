@@ -114,7 +114,7 @@ void initState() {
    return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:Color.fromARGB(255, 216, 189, 154),
+           backgroundColor: greenColor,
         title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
       ),
         sideBar: _sideBar.sideBarMenus(context,HomeScreen.id),
@@ -207,7 +207,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Fournisseurs",snapshot.data!.size.toString(),CupertinoIcons.group_solid,Color.fromARGB(255, 108, 161, 108));
+            return  analyticWidget("Total Fournisseurs",snapshot.data!.size.toString(),CupertinoIcons.group_solid,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 
@@ -236,7 +236,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Categories",snapshot.data!.size.toString(),Icons.category,Color.fromARGB(255, 85, 223, 223));
+            return  analyticWidget("Total Categories",snapshot.data!.size.toString(),Icons.category,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 
@@ -265,7 +265,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Produits",snapshot.data!.size.toString(),Icons.production_quantity_limits,Colors.greenAccent.shade200);
+            return  analyticWidget("Total Produits",snapshot.data!.size.toString(),Icons.production_quantity_limits,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 
@@ -295,7 +295,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Total Commandes",snapshot.data!.size.toString(),Icons.shopping_cart,Colors.purpleAccent.shade100);
+            return  analyticWidget("Total Commandes",snapshot.data!.size.toString(),Icons.shopping_cart,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 
@@ -324,7 +324,7 @@ Text(timeText, style: const TextStyle(
               );
             }
             if(snapshot.hasData){
-            return  analyticWidget("Methodes de livraisons",snapshot.data!.size.toString(), Icons.delivery_dining_outlined,Color.fromARGB(255, 223, 214, 89));
+            return  analyticWidget("Methodes de livraisons",snapshot.data!.size.toString(), Icons.delivery_dining_outlined,Color.fromARGB(255, 216, 189, 154));
             }
             return SizedBox();
 

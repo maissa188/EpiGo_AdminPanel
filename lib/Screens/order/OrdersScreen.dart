@@ -3,6 +3,7 @@ import 'package:epigo_adminpanel/Screens/order/OrdersStatus.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
 import 'package:epigo_adminpanel/services/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:epigo_adminpanel/constants.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +20,7 @@ class OrdersScreen extends StatefulWidget {
     return AdminScaffold(
        backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 216, 189, 154),
+           backgroundColor: greenColor,
         title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
       ),
     
@@ -51,6 +52,7 @@ class OrdersScreen extends StatefulWidget {
                       ],
                     ),
                   ),
+                  SizedBox(height: 20.0,),
                   const Expanded(
                       child: TabBarView(
                     children: [

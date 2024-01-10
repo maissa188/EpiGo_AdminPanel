@@ -81,7 +81,7 @@ Future<void> addDataToFirestore(String imageUrl, String libelle) async {
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 216, 189, 154),
+       backgroundColor: greenColor,
         title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
       ),
       sideBar: _sideBar.sideBarMenus(context,CategoryScreen.id),

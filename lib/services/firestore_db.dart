@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:epigo_adminpanel/Modeles/coupon.dart';
 import 'package:epigo_adminpanel/Modeles/order.dart' as epigo_order;
 class FirestoreDB {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -43,4 +44,18 @@ Stream<List<epigo_order.Order>> getOrdersByStatus(String status) {
       return retVal;
     });
   } 
+
+  Stream<List<CouponModel>> couponsStream() {
+    return _firestore
+        .collection('coupons')
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<CouponModel> retVal = [];
+      query.docs.forEach((element) {
+        retVal.add(CouponModel.fromDocumentSnapshot(element));
+      });
+
+      return retVal;
+    });
+  }
 }

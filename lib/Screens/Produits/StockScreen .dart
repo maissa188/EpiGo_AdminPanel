@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:epigo_adminpanel/Screens/Produits/Stock.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:intl/intl.dart';
 
+import '../../constants.dart';
 
 class StockScreen extends StatefulWidget  {
-static const String id = 'stock-screen';
+
 
   State<StockScreen> createState() => _StockScreenState();
 
@@ -39,7 +42,8 @@ stock = TextEditingController();
 
 
 void _updateStock() async {
-  if (selectedProduit != "0" && selectedFournisseur != "0") {
+  if (selectedProduit != "0" && selectedFournisseur != "0" && dateText.text != "" && dateT.text != "" && stock != 1
+  &&  selectedUnit != "") {
     try {
       String stockId = FirebaseFirestore.instance.collection('stock').doc().id;
       await FirebaseFirestore.instance.collection('stock').doc(stockId).set({
@@ -141,10 +145,10 @@ _selecteDate(context)async{
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 216, 189, 154),
+           backgroundColor: greenColor,
         title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
       ),
-      sideBar: _sideBar.sideBarMenus(context,StockScreen.id),
+      sideBar: _sideBar.sideBarMenus(context,Stock_Screen.id),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 250.0),
@@ -163,10 +167,11 @@ _selecteDate(context)async{
                       Row(
                         children: [
                           SizedBox(
-                            width: 220.0,
+                            width: 250.0,
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               controller: dateText,
+                              readOnly: true,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Le titre est obligatoire';
@@ -175,7 +180,6 @@ _selecteDate(context)async{
                               },
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.zero,
-                                border: OutlineInputBorder(),
                                 labelText: 'Date de commande',
                                 labelStyle: TextStyle(color: Colors.black),
                                 suffixIcon: InkWell(
@@ -187,12 +191,13 @@ _selecteDate(context)async{
                               ),
                             ),
                           ),
-                          SizedBox(width: 50.0,),
+                          SizedBox(width: 75.0,),
                            SizedBox(
-                            width: 220.0,
+                            width: 250.0,
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               controller: dateT,
+                              readOnly: true,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Le titre est obligatoire';
@@ -201,7 +206,7 @@ _selecteDate(context)async{
                               },
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.zero,
-                                border: OutlineInputBorder(),
+                             
                                 labelText: 'Date de réception',
                                 labelStyle: TextStyle(color: Colors.black),
                                 suffixIcon: InkWell(
@@ -217,6 +222,7 @@ _selecteDate(context)async{
                         ],
                       ),
 
+           SizedBox(height: 20.0),
                       Row(
                          mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -225,40 +231,43 @@ _selecteDate(context)async{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(padding: EdgeInsets.all(8.0)),
-                              StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance.collection('products').orderBy('title',descending: true).snapshots(),
-                                builder: (context, snapshot) {
-                                  List<DropdownMenuItem> produitItems = [];
-                                  if (!snapshot.hasData) {
-                                    return const CircularProgressIndicator();
-                                  } else {
-                                    final products = snapshot.data?.docs.reversed.toList();
-                                    produitItems.add(
-                                      const DropdownMenuItem(
-                                        value: "0",
-                                        child: Text('Produit '),
-                                      ),
-                                    );
-                                    for (var category in products!) {
-                                      produitItems.add(DropdownMenuItem(
-                                        value: category["title"],
-                                        child: Text(category['title']),
-                                      ));
+                              SizedBox(
+                                width: 250.0,
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance.collection('products').orderBy('title',descending: true).snapshots(),
+                                  builder: (context, snapshot) {
+                                    List<DropdownMenuItem> produitItems = [];
+                                    if (!snapshot.hasData) {
+                                      return const CircularProgressIndicator();
+                                    } else {
+                                      final products = snapshot.data?.docs.reversed.toList();
+                                      produitItems.add(
+                                        const DropdownMenuItem(
+                                          value: "0",
+                                          child: Text('Produit '),
+                                        ),
+                                      );
+                                      for (var category in products!) {
+                                        produitItems.add(DropdownMenuItem(
+                                          value: category["title"],
+                                          child: Text(category['title']),
+                                        ));
+                                      }
                                     }
-                                  }
-                                  return DropdownButton(
-                                    items: produitItems,
-                                    onChanged: (produitValue) {
-                                      setState(() {
-                                        selectedProduit = produitValue;
-                                       _isProduitSelected = true;
-                                      });
-                                    },
-                                    value: selectedProduit,
-                                    isExpanded: false,
-                                    hint: Text('Sélectionner un produit'),
-                                  );
-                                },
+                                    return DropdownButton(
+                                      items: produitItems,
+                                      onChanged: (produitValue) {
+                                        setState(() {
+                                          selectedProduit = produitValue;
+                                         _isProduitSelected = true;
+                                        });
+                                      },
+                                      value: selectedProduit,
+                                      isExpanded: false,
+                                      hint: Text('Sélectionner un produit'),
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -268,41 +277,44 @@ _selecteDate(context)async{
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(padding: EdgeInsets.all(16.0)),
-                              StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance.collection('fournisseurs').snapshots(),
-                                builder: (context, snapshot) {
-                                  List<DropdownMenuItem> fournisseurItems = [];
-                                  if (!snapshot.hasData) {
-                                    return const CircularProgressIndicator();
-                                  } else {
-                                    final fournisseurs = snapshot.data?.docs.reversed.toList();
-                                    fournisseurItems.add(
-                                      const DropdownMenuItem(
-                                        value: "0",
-                                        child: Text('Fournisseur'),
-                                      ),
-                                    );
-                                    for (var fournisseur in fournisseurs!) {
-                                      fournisseurItems.add(DropdownMenuItem(
-                                        value: fournisseur["name"],
-                                        child: Text(fournisseur['name']),
-                                      ));
+                              Padding(padding: EdgeInsets.all(8.0)),
+                              SizedBox(
+                                width: 250.0,
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance.collection('fournisseurs').snapshots(),
+                                  builder: (context, snapshot) {
+                                    List<DropdownMenuItem> fournisseurItems = [];
+                                    if (!snapshot.hasData) {
+                                      return const CircularProgressIndicator();
+                                    } else {
+                                      final fournisseurs = snapshot.data?.docs.reversed.toList();
+                                      fournisseurItems.add(
+                                        const DropdownMenuItem(
+                                          value: "0",
+                                          child: Text('Fournisseur'),
+                                        ),
+                                      );
+                                      for (var fournisseur in fournisseurs!) {
+                                        fournisseurItems.add(DropdownMenuItem(
+                                          value: fournisseur["name"],
+                                          child: Text(fournisseur['name']),
+                                        ));
+                                      }
                                     }
-                                  }
-                                  return DropdownButton(
-                                    items: fournisseurItems,
-                                    onChanged: (fournisseurValue) {
-                                      setState(() {
-                                        selectedFournisseur = fournisseurValue;
-                                        _isFournisseurSelected = true;
-                                      });
-                                    },
-                                    value: selectedFournisseur,
-                                    isExpanded: false,
-                                    hint: Text('Sélectionner un Fournisseur'),
-                                  );
-                                },
+                                    return DropdownButton(
+                                      items: fournisseurItems,
+                                      onChanged: (fournisseurValue) {
+                                        setState(() {
+                                          selectedFournisseur = fournisseurValue;
+                                          _isFournisseurSelected = true;
+                                        });
+                                      },
+                                      value: selectedFournisseur,
+                                      isExpanded: false,
+                                      hint: Text('Sélectionner un Fournisseur'),
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -312,17 +324,20 @@ _selecteDate(context)async{
                         ],
                       ),
            
-                           SizedBox(height: 16.0),
+                           SizedBox(height: 20.0),
 Row(
+   mainAxisAlignment: MainAxisAlignment.start,
       children: [
-     
-         const Text(
-                          'Unité  :',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+           Padding(padding: EdgeInsets.all(10.0)),
+             Text(
+                              'Unité  :',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+           
+         
                         const SizedBox(width: 10),
                         Row(
                           children: availableUnits.map((unit) {
@@ -345,13 +360,13 @@ Row(
                           
                         ),
                          
-        SizedBox(width: 50.0,),
+        SizedBox(width: 120.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(padding: EdgeInsets.symmetric(horizontal: 130.0)),
+                             
                               Container(
-                                        width: 200.0,
+                                        width: 260.0,
                                         child: TextField(
                                           controller: stock,
                                           keyboardType: TextInputType.number,
@@ -366,12 +381,23 @@ Row(
 
 
             
-              SizedBox(height: 20.0,),
+              SizedBox(height: 30.0,),
               ElevatedButton(
                 onPressed: () {
                   _updateStock();
+                  Navigator.push( context,
+  
+                                MaterialPageRoute(
+  
+                                  builder: (context) =>
+  
+                                   Stock_Screen(),
+  
+                                )
+                  );
                 },
-                child: Text('Alimenter '),
+                child: Text('Alimenter ',style: TextStyle(color: Colors.black),),
+             style: ElevatedButton.styleFrom(primary:primaryColor),
               ),
             ],
           ),

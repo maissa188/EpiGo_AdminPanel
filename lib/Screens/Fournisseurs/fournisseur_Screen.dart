@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:html' as html;
 
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+
 class Fournisseur_Screen extends StatefulWidget {
     static const String id = 'fournisseur-screen';
   const Fournisseur_Screen({super.key});
@@ -25,7 +27,7 @@ class _Fournisseur_ScreenState extends State<Fournisseur_Screen> {
     return AdminScaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 216, 189, 154),
+               backgroundColor: greenColor,
             title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
            
         ),

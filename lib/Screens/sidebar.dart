@@ -1,5 +1,6 @@
 import 'package:epigo_adminpanel/Screens/Banners/banner.dart';
 import 'package:epigo_adminpanel/Screens/Categories/CategoryScreen.dart';
+import 'package:epigo_adminpanel/Screens/Coupon/coupons.dart';
 import 'package:epigo_adminpanel/Screens/DeliveryMethods/delivery_screen.dart';
 import 'package:epigo_adminpanel/Screens/Fournisseurs/fournisseur_Screen.dart';
 import 'package:epigo_adminpanel/Screens/HomeScreen.dart';
@@ -10,11 +11,12 @@ import 'package:epigo_adminpanel/Screens/order/OrdersScreen.dart';
 import 'package:epigo_adminpanel/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_scaffold/admin_scaffold.dart';
   class SideBarwidget {
     sideBarMenus(context, selectedRoute){
     return SideBar(
       backgroundColor:Colors.white12,
-      activeBackgroundColor:  primaryColor,
+      activeBackgroundColor: const Color.fromARGB(255, 216, 189, 154),
       activeIconColor: Colors.white,
       activeTextStyle: const TextStyle(color:Colors.white),
         items: const [
@@ -31,11 +33,6 @@ import 'package:flutter/material.dart';
           AdminMenuItem(title: 'Parametrage',
           icon: Icons.settings,
           children: [
-             AdminMenuItem(
-            title: 'Bannières',
-            route: BannerScreen.id,
-            icon: Icons.image,
-          ),
               AdminMenuItem(
             title: 'Methodes de livraisons',
             route:   DeliveryMethods.id,
@@ -65,10 +62,14 @@ import 'package:flutter/material.dart';
         ),
    AdminMenuItem(
           title: 'Stock',
-          route: Stock_Screen .id, // Replace with the actual route for Orders
+          route:Stock_Screen.id, // Replace with the actual route for Orders
           icon: Icons.check_box, 
         ),
-        
+         AdminMenuItem(
+          title: 'Code promo',
+          route: Coupon_Screen .id, // Replace with the actual route for Orders
+          icon: Icons.discount, 
+        ),
         ], 
         
         selectedRoute: selectedRoute,
@@ -85,7 +86,7 @@ import 'package:flutter/material.dart';
              child: Text(
               'Menu',
               style: TextStyle(
-                color: Colors.black,fontStyle:FontStyle.normal,fontSize: 25,
+                color: Color(0xFF8B4513),fontStyle:FontStyle.normal,fontSize: 25,
                fontWeight: FontWeight.bold,
               ),
             ),

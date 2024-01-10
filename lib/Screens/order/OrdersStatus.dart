@@ -26,7 +26,7 @@ class OrdersStatus extends StatelessWidget {
                   padding: const EdgeInsets.all(0),
                   child: ListView.separated(
                       itemCount: orderController.orders.length,
-                      separatorBuilder: (context, index) => Gap(50),
+                     separatorBuilder: (context, index) => Gap(50),
                       itemBuilder: ((_, index) {
                         return OrdersList(
                           orderController: orderController,
@@ -113,7 +113,7 @@ class OrdersList extends StatelessWidget {
                         Divider(color: Styles.primaryColor),
                     itemBuilder: ((_, index) {
                       return Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Column(children: [
                             
@@ -129,10 +129,12 @@ class OrdersList extends StatelessWidget {
                               ),
                             ),
                           ]),
-                          
+                               SizedBox(width:50),
+        
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+
                                 Text(order.cart![index].title.toString(),
                                     style: Styles.headLineStyle4),
                                 Text(
@@ -141,7 +143,8 @@ class OrdersList extends StatelessWidget {
                                        ),
 
                               ]),
-                          Spacer(),
+                              SizedBox(width:230),
+        
                           Column(children: [
                             Text(
                                '${(order.cart![index].quantity! * order.cart![index].price).toStringAsFixed(3)}\dt',
@@ -198,7 +201,7 @@ class OrdersList extends StatelessWidget {
               ),
                 SizedBox(height: 10),
 
-              // Ajoutez ceci dans la partie où vous affichez les détails de la commande dans OrdersList
+            
 Row(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
@@ -260,7 +263,9 @@ Row(
                   SizedBox(height: 10),
                   Row(
                     children: [
-                      RichText(
+                      
+                      order.status != 'Livrée'
+                      ?RichText(
                           text: TextSpan(
                         style: Styles.headLineStyle4,
                         text: 'Annuler et supprimer la commande: ',
@@ -276,7 +281,9 @@ Row(
                                 color: Styles.orangeColor),
                           ),
                         ],
-                      )),
+                      ))
+                      : Text('',
+                              style: Styles.headLineStyle4),
                     ],
                   ),
                 ],

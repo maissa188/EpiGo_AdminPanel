@@ -4,9 +4,10 @@ import 'package:epigo_adminpanel/Screens/Produits/StockScreen%20.dart';
 import 'package:epigo_adminpanel/Screens/sidebar.dart';
 import 'package:epigo_adminpanel/constants.dart';
 import 'package:epigo_adminpanel/services/stock_view.dart';
-import 'package:epigo_adminpanel/widgets/fournisseur_datatable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+
+import '../../widgets/stockTable.dart';
 
 class Stock_Screen extends StatefulWidget {
     static const String id = 'stock-screen';
@@ -24,7 +25,7 @@ class _Stock_ScreenState extends State<Stock_Screen> {
     return AdminScaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 216, 189, 154),
+               backgroundColor: greenColor,
             title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
            
         ),
@@ -33,8 +34,8 @@ class _Stock_ScreenState extends State<Stock_Screen> {
             sideBar: _sideBar.sideBarMenus(context,Stock_Screen.id),
           body: SingleChildScrollView(
             child: Container(
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.all(10),
+              alignment: Alignment.bottomLeft,
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -75,7 +76,7 @@ class _Stock_ScreenState extends State<Stock_Screen> {
                            
          const Divider(thickness: 5,),
         
-FournisseurDataTable(viewModel: myViewModel),
+StockDataTable(viewModel: myViewModel),
           Divider(thickness: 5,),
 
            

@@ -53,7 +53,7 @@ List<Map<String, dynamic>> lowQuantityProducts = [];
         return AdminScaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 216, 189, 154),
+               backgroundColor: greenColor,
             title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
            
         ),

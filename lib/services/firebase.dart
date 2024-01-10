@@ -14,6 +14,8 @@ class FirebaseServices{
   CollectionReference orders = FirebaseFirestore.instance.collection('orders');
      CollectionReference deliveryMethods = FirebaseFirestore.instance.collection('deliveryMethods');
          CollectionReference stock= FirebaseFirestore.instance.collection('stock');
+          CollectionReference coupons= FirebaseFirestore.instance.collection('coupons');
+
 
   Future<QuerySnapshot> getAdminCredentials(){
 var result = FirebaseFirestore.instance.collection('Admin').get();

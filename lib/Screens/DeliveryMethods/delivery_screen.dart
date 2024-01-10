@@ -4,6 +4,7 @@ import 'package:epigo_adminpanel/constants.dart';
 import 'package:epigo_adminpanel/widgets/delivery_methods_datatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:epigo_adminpanel/Screens/DeliveryMethods/add_delivery.dart';
 
 class DeliveryMethods extends StatefulWidget {
     static const String id = 'DeliveryMethods-screen';
@@ -20,7 +21,7 @@ class _DeliveryMethodsState extends State<DeliveryMethods> {
     return AdminScaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 216, 189, 154),
+          backgroundColor: greenColor,
             title: const Text('Epi Go Dashboard',style: TextStyle(color:Colors.white,),),
            
         ),
@@ -46,6 +47,25 @@ class _DeliveryMethodsState extends State<DeliveryMethods> {
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(onPressed: () {
+              {
+    
+  
+                              Navigator.push(
+  
+                                context,
+  
+                                MaterialPageRoute(
+  
+                                  builder: (context) =>
+  
+                                     AddDelivery(),
+  
+                                ),
+  
+                              );
+  
+                            }
+              
                                
                                 }, 
             child: Text('Ajouter',style: TextStyle(color: Colors.black),),

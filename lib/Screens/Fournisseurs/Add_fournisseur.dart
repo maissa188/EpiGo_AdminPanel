@@ -24,7 +24,7 @@ class _AddFournisseurScreenState extends State<AddFournisseurScreen> {
     return AdminScaffold(
       backgroundColor: Colors.white,
     appBar: AppBar(
-      backgroundColor: Color.fromARGB(255, 216, 189, 154),
+   backgroundColor: greenColor,
       title: const Text(
         'Epi Go Dashboard',
         style: TextStyle(color: Colors.white),
@@ -65,24 +65,42 @@ class _AddFournisseurScreenState extends State<AddFournisseurScreen> {
                   decoration: InputDecoration(labelText: 'Mobile'),
                 ),
                 SizedBox(height: 16.0),
-                ElevatedButton(
-     onPressed: () async {
-                    await _viewModel.addFournisseur(
-                      name: _viewModel.nameController.text,
-                      email: _viewModel.emailController.text,
-                      address: _viewModel.addressController.text,
-                      mobile: _viewModel.mobileController.text,
-                    );
+              ElevatedButton(
+  onPressed: () async {
+    // Vérifier si tous les champs sont remplis
+    if (_viewModel.nameController.text.isNotEmpty &&
+        _viewModel.emailController.text.isNotEmpty &&
+        _viewModel.addressController.text.isNotEmpty &&
+        _viewModel.mobileController.text.isNotEmpty) {
       
-                     Navigator.pushReplacement(
-                 context,
-                 MaterialPageRoute(builder: (context) => Fournisseur_Screen()),
-               );
-                     
-                  },
-                   child: Text('Sauvegarder',style: TextStyle(color: Colors.black),),
-                style: ElevatedButton.styleFrom(primary:primaryColor),
-                ),
+      // Appeler la méthode addFournisseur seulement si les champs sont remplis
+      await _viewModel.addFournisseur(
+        name: _viewModel.nameController.text,
+        email: _viewModel.emailController.text,
+        address: _viewModel.addressController.text,
+        mobile: _viewModel.mobileController.text,
+      );
+
+      // Naviguer vers la page suivante
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Fournisseur_Screen()),
+      );
+    } else {
+      // Afficher un message d'erreur ou effectuer une action si les champs ne sont pas tous remplis
+      // Par exemple, afficher un SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Veuillez remplir tous les champs.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  },
+  child: Text('Sauvegarder', style: TextStyle(color: Colors.black)),
+  style: ElevatedButton.styleFrom(primary: primaryColor),
+),
+
               ],
             ),
           ),

@@ -174,7 +174,7 @@ Widget build(BuildContext context) {
   return AdminScaffold(
     backgroundColor: Colors.white,
     appBar: AppBar(
-      backgroundColor: Color.fromARGB(255, 216, 189, 154),
+         backgroundColor: greenColor,
       title: const Text(
         'Epi Go Dashboard',
         style: TextStyle(color: Colors.white),
@@ -412,7 +412,6 @@ Widget build(BuildContext context) {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
-                            //readOnly: true,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Prix de vente',
@@ -568,7 +567,7 @@ const SizedBox(height: 20),
              
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Veuillez sélectionner une image et remplir les champs'),
+                  content: Text('Veuillez remplir tous les champs'),
                   backgroundColor: Colors.red,
                 ),
               );
